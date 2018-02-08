@@ -1,13 +1,13 @@
 body {
   font-family: 'Open Sans Condensed', sans-serif;
-  background: #696969;
+  background: #696969
+
 }
 
 .container{
-  margin: 0px;
-  padding: 0px;
-  width: 100%;
   display: flex;
+  align-content: flex-start;
+  background: #363636;
 }
 
 .left-nav{
@@ -16,18 +16,11 @@ body {
   max-width: 30%;
   height: 100vh;
   padding-right: 15px;
-
 }
 
 .right-content{
   padding-left: 5px;
   flex: 2;
-}
-
-.center {
-  margin: auto;
-  display: table;
-  margin-top: 10px;
 }
   
 h1, h2, h3, h4, p {
@@ -55,4 +48,24 @@ button {
 
 .col-sm-0 {
   color: white;
+}
+
+.item-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.child-items{
+  margin: 5px;
+  text-align: center;
+  background-color: navajowhite;
+  width: 31%;
+  height: 100px;
+  box-sizing: border-box;
+}
+
+.child-items p{
+  color: black;
+  margin: 0px;
+  padding: 10px;
 }
