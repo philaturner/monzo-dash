@@ -1,0 +1,28 @@
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  background: #696969;
+}
+
+.center {
+  margin: auto;
+  display: table;
+  margin-top: 10px;
+}
+  
+h1, h2, h3, h4, p {
+  color: white;
+  margin: auto;
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+}
+
+h1 {
+  margin-top: 15px;
+  font-size: 55px;
+  text-transform: uppercase;
+}
+
+button {
+  margin: 5px;
+}
