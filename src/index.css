@@ -3,6 +3,27 @@ body {
   background: #696969;
 }
 
+.container{
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  display: flex;
+}
+
+.left-nav{
+  flex: 1;
+  border-right: 1px solid white;
+  max-width: 30%;
+  height: 100vh;
+  padding-right: 15px;
+
+}
+
+.right-content{
+  padding-left: 5px;
+  flex: 2;
+}
+
 .center {
   margin: auto;
   display: table;
@@ -11,16 +32,17 @@ body {
   
 h1, h2, h3, h4, p {
   color: white;
-  margin: auto;
-  width: 50%;
-  text-align: center;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
-h1 {
-  margin-top: 15px;
-  font-size: 55px;
+h1, h2{
   text-transform: uppercase;
+  color: navajowhite;
+}
+
+h4{
+  line-height: 20px;
 }
 
 button {
@@ -28,9 +50,7 @@ button {
 }
 
 .form-horizontal {
-  margin: auto;
-  display: table;
-  margin-top: 10px;
+  margin: 10px;
 }
 
 .col-sm-0 {
