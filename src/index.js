@@ -95,12 +95,10 @@ class Main extends React.Component{
 
 	login = () => {
 		console.log('login');
-		let data = new Monzo();
-		data.setBalance();
-		data.setSpendToday();
+		let monzo = new Monzo();
 		this.setState({
 			loggedIn: true,
-			monzo: data
+			monzo: monzo
 		})
 	}
 

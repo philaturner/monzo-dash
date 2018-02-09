@@ -6,6 +6,8 @@ export default class Monzo {
 		this.dashboard = {};
 		this.transactions = {};
 		this.parseTransactions();
+		this.setBalance();
+		this.setSpendToday();
 	}
 
 	parseTransactions= () => {
