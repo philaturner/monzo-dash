@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { ButtonToolbar, Form, FormGroup, Col, ControlLabel, FormControl, Checkbox, Button } from 'react-bootstrap';
-import MonzoAPI from './monzo-api.js';
+import Monzo from './monzo.js';
 
 class Items extends React.Component{
 	render(){
@@ -20,27 +20,19 @@ class ItemHolder extends React.Component{
 	render(){
 		let itemsArr = [];
 		let merchant;
-		let transLength = this.props.monzo_data.transaction_data.transactions.length;
-		for (let i = 0; i < transLength; i ++){
-			let category = (this.props.monzo_data.transaction_data.transactions[i].category);
-			let value = Math.abs(this.props.monzo_data.transaction_data.transactions[i].amount)/100;
-			if (this.props.monzo_data.transaction_data.transactions[i].merchant !== null){
-				merchant = this.props.monzo_data.transaction_data.transactions[i].merchant.name;
-			} else {
-				merchant = "Unknown";
-			}
+		Object.entries(this.props.monzo_data.transactions).forEach(([key, value]) => {
 			itemsArr.push(
 				<Items 
-					key={i}
-					category={category}
-					value={value}
-					merchant={merchant}
+					key={key}
+					category={value.category}
+					value={value.amount}
+					merchant={value.merchant ? value.merchant.length > 14 ? value.merchant.substring(0,14) + ".." : value.merchant : "Misc"}
 				/>
 			)
-		}
+		})
 		return(
 			<div>
-				<h2>Transactions</h2>
+				<h2>Transaction Log</h2>
 				<div className = "item-container">
 					{itemsArr}
 				</div>
@@ -96,25 +88,19 @@ class Main extends React.Component{
 	constructor(){
 		super();
 			this.state = {
-				monzoData: {},
+				monzo: {},
 				loggedIn: false
 			}
 		}
 
 	login = () => {
 		console.log('login');
-		let data = new MonzoAPI();
+		let data = new Monzo();
 		data.setBalance();
 		data.setSpendToday();
-		data.setTransCount();
-		data.setTotalTransValue();
 		this.setState({
 			loggedIn: true,
-			monzoData: data,
-			balance: data.balance,
-			spend_today: data.spend_today,
-			transaction_count: data.transaction_count,
-			transaction_total_value: data.transaction_total_value
+			monzo: data
 		})
 	}
 
@@ -134,10 +120,10 @@ class Main extends React.Component{
 			 ?
 				<Balance 
 					loggedIn = {this.state.loggedIn}
-					balance = {this.state.balance}
-					spend_today = {this.state.spend_today}
-					transaction_count = {this.state.transaction_count}
-					transaction_total_value = {this.state.transaction_total_value}
+					balance = {this.state.monzo.dashboard.balance}
+					spend_today = {this.state.monzo.dashboard.spend_today}
+					transaction_count = {this.state.monzo.dashboard.transaction_count}
+					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
 				/> 
 				:
 				<LoginForm 
@@ -150,7 +136,7 @@ class Main extends React.Component{
 						?
 							<ItemHolder 
 								transaction_count = {this.state.transaction_count}
-								monzo_data = {this.state.monzoData}
+								monzo_data = {this.state.monzo}
 							/>
 						:
 							<div className = "welcome-text">
