@@ -4,6 +4,7 @@ import transJSON from './trans.json'
 export default class MonzoAPI {
 	constructor(){
 		this.data = balanceJSON;
+		this.transaction_data = transJSON;
 	}
 
 	setBalance = () => {

@@ -13,7 +13,7 @@ body {
 .left-nav{
   flex: 1;
   border-right: 1px solid white;
-  max-width: 30%;
+  max-width: 22%;
   height: 100vh;
   padding-right: 15px;
 }
@@ -26,16 +26,30 @@ body {
 h1, h2, h3, h4, p {
   color: white;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
-h1, h2{
+h1, h2, h3, h4{
   text-transform: uppercase;
   color: navajowhite;
 }
 
-h4{
-  line-height: 20px;
+h3, h4 {
+  color: black;
+  margin: 2px;
+}
+
+h3 {
+  font-size: 28px;
+  color: darkgoldenrod;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+.left-nav h4 {
+  color: white;
 }
 
 button {
@@ -43,7 +57,7 @@ button {
 }
 
 .form-horizontal {
-  margin: 10px;
+  margin: 5px;
 }
 
 .col-sm-0 {
@@ -56,12 +70,28 @@ button {
 }
 
 .child-items{
+  border-radius: 25px;
   margin: 5px;
+  padding-top: 5px;
   text-align: center;
   background-color: navajowhite;
   width: 31%;
   height: 100px;
   box-sizing: border-box;
+}
+
+@media only screen and (max-width: 769px){
+  .child-items{
+    width: 47%;
+  }
+
+  .form-horizontal{
+    margin: 0px;
+  }
+}
+
+.child-items:hover{
+  box-shadow: 0px 2px 1px rgb(211, 211, 211);
 }
 
 .child-items p{
