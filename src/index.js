@@ -32,7 +32,7 @@ class Items extends React.Component{
 			<div className = "child-items" 
 					 id={id}
 					 style={styles}
-					 onClick ={() => handleClick({id})}
+					 onClick ={() => handleClick({ id, merchant, category, value })}
 					 >
 				<h3>{merchant}</h3>
 				<h4>{category}</h4>
@@ -123,7 +123,7 @@ class SelectedElements extends React.Component{
 								className="selected-child" 
 								key={id} 
 								onClick={()=>removeSelected(index)} >
-							Test Name - £1.12
+								{selectedElements[index][1]}<span>£{selectedElements[index][3]}</span>
 							</p>
 		})
 		return(
@@ -189,7 +189,8 @@ class Main extends React.Component{
 	}
 
 	handleClick(e){
-		const currentSelected = this.state.selectedElements.concat([e.id])
+		const arrItem = [e.id, e.merchant, e.category, e.value]
+		const currentSelected = this.state.selectedElements.concat([arrItem])
 		this.setState({
 			selectedElements: currentSelected
 		})

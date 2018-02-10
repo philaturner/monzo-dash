@@ -110,6 +110,10 @@ button {
   padding: 3px;
 }
 
+.selected-child span{
+  float: right;
+}
+
 .selected-child:hover{
   background-color: rgb(143, 0, 0);
   color: white;
