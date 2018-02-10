@@ -22,7 +22,7 @@ class Items extends React.Component{
 	}
 
 	render(){
-		const { id, merchant, category, value } = this.props;
+		const { id, merchant, category, value, handleClick } = this.props;
 
 		const styles = {
 			backgroundColor: this.colours[category]
@@ -32,6 +32,7 @@ class Items extends React.Component{
 			<div className = "child-items" 
 					 id={id}
 					 style={styles}
+					 onClick ={() => handleClick({id})}
 					 >
 				<h3>{merchant}</h3>
 				<h4>{category}</h4>
@@ -44,6 +45,7 @@ class Items extends React.Component{
 class ItemHolder extends React.Component{	
 	render(){
 		const { transactions } = this.props.monzo_data;
+		const { handleClick } = this.props;
 		const itemsArr = [];
 
 		Object.filter = (obj, predicate) => 
@@ -58,7 +60,9 @@ class ItemHolder extends React.Component{
 		Object.entries(filteredTrans).reverse().forEach(([key, value]) => {
 			itemsArr.push(
 				<Items 
+					handleClick={handleClick}
 					key={key}
+					id={value.id}
 					category={value.category}
 					value={value.amount}
 					merchant={value.merchant.length > 16 ? value.merchant.substring(0,16) + "..." : value.merchant}
@@ -67,7 +71,9 @@ class ItemHolder extends React.Component{
 		})
 		return(
 			<div>
-				<h2>Transaction Log</h2>
+				<div className = "right-top-nav">
+					<h2>Transactions</h2>
+				</div>
 				<div className = "item-container">
 					{itemsArr}
 				</div>
@@ -78,7 +84,7 @@ class ItemHolder extends React.Component{
 
 class Balance extends React.Component{	
 	render(){
-		const { balance, spend_today, transaction_count, transaction_total_value, filterText, handleChange } = this.props;
+		const { balance, spend_today, transaction_count, transaction_total_value, filterText, handleChange, selectedElements, removeSelected } = this.props;
 			return(
 				<div>
 					<div className="account-summary">
@@ -100,10 +106,34 @@ class Balance extends React.Component{
 						/>
 						</FormGroup>
 				</form>
+				<SelectedElements 
+					selectedElements={selectedElements}
+					removeSelected={removeSelected}
+				/>
 			</div>
 			)
 		}
 	}
+
+class SelectedElements extends React.Component{
+	render(){
+		const { selectedElements, removeSelected } = this.props
+		const elements = selectedElements.map((id, index) => {
+			return <p 
+								className="selected-child" 
+								key={id} 
+								onClick={()=>removeSelected(index)} >
+							Test Name - £1.12
+							</p>
+		})
+		return(
+			<div className = "selected-elements">
+				<h4>Selected</h4>
+				{elements}
+			</div>
+		)
+	}
+}
 
 class LoginForm extends React.Component{
 	render(){
@@ -140,7 +170,8 @@ class Main extends React.Component{
 			this.state = {
 				monzo: {},
 				loggedIn: false,
-				filterText: ""
+				filterText: "",
+				selectedElements: []
 			}
 		}
 	
@@ -148,6 +179,19 @@ class Main extends React.Component{
 		e.preventDefault()
 		this.setState({
 			filterText: e.target.value
+		})
+	}
+
+	removeSelected(e){
+		this.setState({
+			selectedElements: this.state.selectedElements.filter((item, i) => i !== e)
+		});
+	}
+
+	handleClick(e){
+		const currentSelected = this.state.selectedElements.concat([e.id])
+		this.setState({
+			selectedElements: currentSelected
 		})
 	}
 
@@ -173,6 +217,8 @@ class Main extends React.Component{
 					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
 					handleChange = {this.handleChange.bind(this)}
 					filterText = {this.state.filterText}
+					selectedElements = {this.state.selectedElements}
+					removeSelected = {this.removeSelected.bind(this)}
 				/> 
 				:
 				<LoginForm 
@@ -187,6 +233,8 @@ class Main extends React.Component{
 								transaction_count = {this.state.transaction_count}
 								monzo_data = {this.state.monzo}
 								filterText = {this.state.filterText}
+								selectedElements = {this.state.selectedElements}
+								handleClick = {this.handleClick.bind(this)}
 							/>
 						:
 							<div className = "welcome-text">

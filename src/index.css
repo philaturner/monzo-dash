@@ -89,6 +89,7 @@ button {
 
 .child-items:hover{
   box-shadow: 0px 2px 1px rgb(211, 211, 211);
+  cursor: pointer;
 }
 
 .child-items p{
@@ -99,4 +100,19 @@ button {
 
 .account-summary{
   margin-bottom: 15px;
+}
+
+.selected-child{
+  font-size: 15px;
+  color: black;
+  background-color: cornsilk;
+  margin: 2px;
+  padding: 3px;
+}
+
+.selected-child:hover{
+  background-color: rgb(143, 0, 0);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
