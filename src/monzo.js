@@ -1,5 +1,5 @@
-import balanceJSON from './balance.json'
-import transJSON from './trans.json'
+import balanceJSON from './example-data/balance.json'
+import transJSON from './example-data/trans.json'
 
 export default class Monzo {
 	constructor(){
