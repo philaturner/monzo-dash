@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { ButtonToolbar, Form, FormGroup, Col, ControlLabel, FormControl, Checkbox, Button } from 'react-bootstrap';
+import { ButtonToolbar, Form, FormGroup, Col, ControlLabel, FormControl, Checkbox, Button, HelpBlock } from 'react-bootstrap';
 import Monzo from './monzo.js';
 
 class Items extends React.Component{
@@ -46,7 +46,17 @@ class ItemHolder extends React.Component{
 		const { transactions } = this.props.monzo_data;
 		const itemsArr = [];
 		const merchant = "";
-		Object.entries(transactions).reverse().forEach(([key, value]) => {
+
+		Object.filter = (obj, predicate) => 
+    Object.keys(obj)
+          .filter( key => predicate(obj[key]) )
+          .reduce( (res, key) => (res[key] = obj[key], res), {} );
+
+		const filteredTrans = Object.filter(transactions, item => {
+			return !item.category.toLowerCase().indexOf(this.props.searchText)
+		})
+
+		Object.entries(filteredTrans).reverse().forEach(([key, value]) => {
 			itemsArr.push(
 				<Items 
 					key={key}
@@ -67,17 +77,31 @@ class ItemHolder extends React.Component{
 	}
 }
 
-class Balance extends React.Component{
+class Balance extends React.Component{	
 	render(){
-		const { balance, spend_today, transaction_count, transaction_total_value } = this.props;
+		const { balance, spend_today, transaction_count, transaction_total_value, searchText, handleChange } = this.props;
 			return(
 				<div>
-					<h2>Summary</h2>
-					<h4>Balance: £{balance}</h4>
-					<h4>Spent Today: £{spend_today}</h4>
-					<h4>Transactions: {transaction_count}</h4>
-					<h4>Total Value: £{transaction_total_value|0}</h4>
-				</div>
+					<div className="account-summary">
+						<h2>Summary</h2>
+						<h4>Balance: £{balance}</h4>
+						<h4>Spent Today: £{spend_today}</h4>
+						<h4>Transactions: {transaction_count}</h4>
+						<h4>Total Value: £{transaction_total_value|0}</h4>
+					</div>
+					<form>
+						<FormGroup
+							controlId="formBasicText"
+						>
+						<FormControl
+							type="text"
+							value={searchText}
+							placeholder="Filter by category"
+							onChange={handleChange}
+						/>
+						</FormGroup>
+				</form>
+			</div>
 			)
 		}
 	}
@@ -112,13 +136,22 @@ class LoginForm extends React.Component{
 	}
 
 class Main extends React.Component{
-	constructor(){
-		super();
+	constructor(props){
+		super(props);
 			this.state = {
 				monzo: {},
-				loggedIn: false
+				loggedIn: false,
+				searchText: ""
 			}
 		}
+	
+	handleChange(e){
+		e.preventDefault()
+		console.log("handling");
+		this.setState({
+			searchText: e.target.value
+		})
+	}
 
 	login = () => {
 		console.log('login');
@@ -127,6 +160,7 @@ class Main extends React.Component{
 			loggedIn: true,
 			monzo: monzo
 		})
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentDidMount(){
@@ -145,6 +179,8 @@ class Main extends React.Component{
 					spend_today = {this.state.monzo.dashboard.spend_today}
 					transaction_count = {this.state.monzo.dashboard.transaction_count}
 					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
+					handleChange = {this.handleChange}
+					searchText = {this.state.searchText}
 				/> 
 				:
 				<LoginForm 
@@ -158,6 +194,7 @@ class Main extends React.Component{
 							<ItemHolder 
 								transaction_count = {this.state.transaction_count}
 								monzo_data = {this.state.monzo}
+								searchText = {this.state.searchText}
 							/>
 						:
 							<div className = "welcome-text">
