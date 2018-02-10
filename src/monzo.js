@@ -2,12 +2,14 @@ import balanceJSON from './example-data/balance.json'
 import transJSON from './example-data/trans.json'
 
 export default class Monzo{
-	constructor(){
+	constructor(sample = false){
 		this.dashboard = {};
 		this.transactions = {};
-		this.setBalance(balanceJSON.balance);
-		this.setSpendToday(balanceJSON.spend_today);
-		this.parseTransactions(transJSON);
+		if (sample){
+			this.setBalance(balanceJSON.balance);
+			this.setSpendToday(balanceJSON.spend_today);
+			this.parseTransactions(transJSON);
+		}
 	}
 
 	getApiCallUrl = (type, accountId) => {

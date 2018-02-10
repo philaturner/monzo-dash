@@ -164,6 +164,7 @@ class LoginForm extends React.Component{
 				<FormGroup>
 					<Col smOffset={5} sm={30}>
 						<Button onClick={this.loginHandler}>Login</Button>
+						<Button onClick={this.props.sampleHandler}>Sample Data</Button>
 					</Col>
 				</FormGroup>
 			</Form>
@@ -219,6 +220,14 @@ class Main extends React.Component{
 		})
 	}
 
+	handleSample(){
+		const monzo = new Monzo(true);
+		this.setState({
+			loggedIn: true,
+			monzo
+		})
+	}
+
 	render() {
 		return(
 	 	<div className = "container">
@@ -240,7 +249,7 @@ class Main extends React.Component{
 				:
 				<LoginForm 
 					loginHandler = {this.login.bind(this)}
-					accID = {this.state}
+					sampleHandler = {this.handleSample.bind(this)}
 				/>
 			}
 			</div>
