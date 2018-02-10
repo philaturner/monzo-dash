@@ -17,7 +17,7 @@ class Items extends React.Component{
 			'shopping': '#F09696',
 			'transport': '#1C7890',
 			'general': '#9a9a9a',
-			'expenses': "#3a3a3a"
+			'expenses': "#DBBA88"
 		}
 	}
 
@@ -205,15 +205,16 @@ class Main extends React.Component{
 	}
 
 	login(accID, token){
-		console.log(accID.value,token.value)
 		const monzo = new Monzo();
-		monzo.makeApiCall(accID.value, token.value).then((result) => {
+		monzo.makeApiCall('balance', accID.value, token.value).then((result) => {
 			monzo.setBalance(result.balance);
 			monzo.setSpendToday(result.spend_today);
-			this.setState({
-				loggedIn: true,
-				monzo,
-				result
+			monzo.makeApiCall('transactions', accID.value, token.value).then((result) => {
+				monzo.parseTransactions(result);
+				this.setState({
+					loggedIn: true,
+					monzo
+				})
 			})
 		})
 	}

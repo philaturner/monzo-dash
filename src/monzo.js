@@ -7,11 +7,16 @@ export default class Monzo{
 		this.transactions = {};
 		this.setBalance(balanceJSON.balance);
 		this.setSpendToday(balanceJSON.spend_today);
-		this.parseTransactions();
+		this.parseTransactions(transJSON);
 	}
 
-	getApiCallUrl = (accountId) => {
-		return `https://api.monzo.com/balance?account_id=${accountId}` 
+	getApiCallUrl = (type, accountId) => {
+		switch (type){
+			case "balance":
+				return `https://api.monzo.com/balance?account_id=${accountId}`
+			case "transactions":
+				return `https://api.monzo.com/transactions?expand[]=merchant&account_id=${accountId}`
+		}
 	}
 
 	getApiHeader = (token) => {
@@ -22,15 +27,15 @@ export default class Monzo{
 		}
 	}
 
-	makeApiCall = (accountId, token) => {
+	makeApiCall = (type, accountId, token) => {
 		return new Promise((resolve, reject) => {
-			fetch(this.getApiCallUrl(accountId), this.getApiHeader(token))
+			fetch(this.getApiCallUrl(type, accountId), this.getApiHeader(token))
 			.then(response => {
 					if (!response.ok){
-							throw Error('No response')
+							throw Error('no response')
 					}
 					if (response.status !== 200){
-							throw Error('Failed Auth')
+							throw Error('failed authentication')
 					}
 					return response
 			})
@@ -51,8 +56,8 @@ export default class Monzo{
 		this.dashboard.spend_today = parseFloat(Math.round(Math.abs(value) * 100) / 10000).toFixed(2);
 	}
 
-	parseTransactions= () => {
-		let rawTransactions = transJSON;
+	parseTransactions= (data) => {
+		let rawTransactions = data;
 		let transCounter = 0;
 		let totalValue = 0;
 		//loop through all transactions
