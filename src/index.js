@@ -53,9 +53,7 @@ class ItemHolder extends React.Component{
           .reduce( (res, key) => (res[key] = obj[key], res), {} );
 
 		const filteredTrans = Object.filter(transactions, item => {
-			if (item.merchant){
-				return !item.merchant.toLowerCase().indexOf(this.props.filterText)
-			}
+			return item.search_string.toLowerCase().indexOf(this.props.filterText) >= 0
 		})
 
 		Object.entries(filteredTrans).reverse().forEach(([key, value]) => {
@@ -64,7 +62,7 @@ class ItemHolder extends React.Component{
 					key={key}
 					category={value.category}
 					value={value.amount}
-					merchant={value.merchant ? value.merchant.length > 14 ? value.merchant.substring(0,14) + ".." : value.merchant : "Misc"}
+					merchant={value.merchant.length > 16 ? value.merchant.substring(0,16) + "..." : value.merchant}
 				/>
 			)
 		})
@@ -89,7 +87,7 @@ class Balance extends React.Component{
 						<h4>Balance: £{balance}</h4>
 						<h4>Spent Today: £{spend_today}</h4>
 						<h4>Transactions: {transaction_count}</h4>
-						<h4>Total Value: £{transaction_total_value|0}</h4>
+						<h4>Total Spent: £{transaction_total_value|0}</h4>
 					</div>
 					<form>
 						<FormGroup
@@ -149,7 +147,6 @@ class Main extends React.Component{
 	
 	handleChange(e){
 		e.preventDefault()
-		console.log("handling");
 		this.setState({
 			filterText: e.target.value
 		})
@@ -162,11 +159,6 @@ class Main extends React.Component{
 			loggedIn: true,
 			monzo: monzo
 		})
-		this.handleChange = this.handleChange.bind(this);
-	}
-
-	componentDidMount(){
-		console.log("mounting");
 	}
 
 	render() {
@@ -181,7 +173,7 @@ class Main extends React.Component{
 					spend_today = {this.state.monzo.dashboard.spend_today}
 					transaction_count = {this.state.monzo.dashboard.transaction_count}
 					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
-					handleChange = {this.handleChange}
+					handleChange = {this.handleChange.bind(this)}
 					filterText = {this.state.filterText}
 				/> 
 				:

@@ -22,11 +22,12 @@ export default class Monzo {
 				this.transactions[transCounter] = {
 					date: value.created,
 					category: value.category,
-					merchant: value.merchant ? value.merchant.name : null,
+					merchant: value.merchant ? value.merchant.name : "Misc",
 					amount: (Math.abs(value.amount)/100),
 					id: value.id,
-					emoji: value.merchant ? value.merchant.emoji : null
+					search_string: ""
 				}
+				this.transactions[transCounter].search_string = this.transactions[transCounter].category + this.transactions[transCounter].merchant + this.transactions[transCounter].amount;
 			}
 		});
 		this.dashboard.transaction_count = transCounter;
