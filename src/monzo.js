@@ -23,7 +23,7 @@ export default class Monzo {
 					date: value.created,
 					category: value.category,
 					merchant: value.merchant ? value.merchant.name : "Misc",
-					amount: (Math.abs(value.amount)/100),
+					amount: parseFloat(Math.round(Math.abs(value.amount) * 100) / 10000).toFixed(2),
 					id: value.id,
 					search_string: ""
 				}
