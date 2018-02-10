@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { ButtonToolbar, Form, FormGroup, Col, ControlLabel, FormControl, Checkbox, Button, HelpBlock } from 'react-bootstrap';
+import { Form, FormGroup, Col, FormControl, Button } from 'react-bootstrap';
 import Monzo from './monzo.js';
 
 class Items extends React.Component{
@@ -45,7 +45,6 @@ class ItemHolder extends React.Component{
 	render(){
 		const { transactions } = this.props.monzo_data;
 		const itemsArr = [];
-		const merchant = "";
 
 		Object.filter = (obj, predicate) => 
     Object.keys(obj)
@@ -153,7 +152,6 @@ class Main extends React.Component{
 	}
 
 	login = () => {
-		console.log('login');
 		let monzo = new Monzo();
 		this.setState({
 			loggedIn: true,
