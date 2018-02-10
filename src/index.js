@@ -53,7 +53,9 @@ class ItemHolder extends React.Component{
           .reduce( (res, key) => (res[key] = obj[key], res), {} );
 
 		const filteredTrans = Object.filter(transactions, item => {
-			return !item.category.toLowerCase().indexOf(this.props.searchText)
+			if (item.merchant){
+				return !item.merchant.toLowerCase().indexOf(this.props.searchText)
+			}
 		})
 
 		Object.entries(filteredTrans).reverse().forEach(([key, value]) => {
@@ -96,7 +98,7 @@ class Balance extends React.Component{
 						<FormControl
 							type="text"
 							value={searchText}
-							placeholder="Filter by category"
+							placeholder="Filter..."
 							onChange={handleChange}
 						/>
 						</FormGroup>
