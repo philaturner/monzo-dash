@@ -5,12 +5,37 @@ import { ButtonToolbar, Form, FormGroup, Col, ControlLabel, FormControl, Checkbo
 import Monzo from './monzo.js';
 
 class Items extends React.Component{
+	constructor(){
+		super();
+		this.colours = {
+			'bills': '#50B8DD',
+			'cash': '#9ABBAA',
+			'eating_out': '#E64B5F',
+			'entertainment': '#EB824B',
+			'groceries': '#F5B946',
+			'holiday': '#B882FC',
+			'shopping': '#F09696',
+			'transport': '#1C7890',
+			'general': '#9a9a9a',
+			'expenses': "#3a3a3a"
+		}
+	}
+
 	render(){
+		const { id, merchant, category, value } = this.props;
+
+		const styles = {
+			backgroundColor: this.colours[category]
+		}
+
 		return(
-			<div className = "child-items" id={this.props.id}>
-				<h3>{this.props.merchant}</h3>
-				<h4>{this.props.category}</h4>
-				<h5>£{this.props.value}</h5>
+			<div className = "child-items" 
+					 id={id}
+					 style={styles}
+					 >
+				<h3>{merchant}</h3>
+				<h4>{category}</h4>
+				<h5>£{value}</h5>
 			</div>
 		)
 	}
@@ -18,9 +43,10 @@ class Items extends React.Component{
 
 class ItemHolder extends React.Component{	
 	render(){
-		let itemsArr = [];
-		let merchant;
-		Object.entries(this.props.monzo_data.transactions).forEach(([key, value]) => {
+		const { transactions } = this.props.monzo_data;
+		const itemsArr = [];
+		const merchant = "";
+		Object.entries(transactions).reverse().forEach(([key, value]) => {
 			itemsArr.push(
 				<Items 
 					key={key}
@@ -43,13 +69,14 @@ class ItemHolder extends React.Component{
 
 class Balance extends React.Component{
 	render(){
+		const { balance, spend_today, transaction_count, transaction_total_value } = this.props;
 			return(
 				<div>
 					<h2>Summary</h2>
-					<h4>Balance: £{this.props.balance}</h4>
-					<h4>Spent Today: £{this.props.spend_today}</h4>
-					<h4>Transactions: {this.props.transaction_count}</h4>
-					<h4>Total Value: £{this.props.transaction_total_value|0}</h4>
+					<h4>Balance: £{balance}</h4>
+					<h4>Spent Today: £{spend_today}</h4>
+					<h4>Transactions: {transaction_count}</h4>
+					<h4>Total Value: £{transaction_total_value|0}</h4>
 				</div>
 			)
 		}
@@ -100,10 +127,6 @@ class Main extends React.Component{
 			loggedIn: true,
 			monzo: monzo
 		})
-	}
-
-	clear = () => {
-		console.log('clear data');
 	}
 
 	componentDidMount(){
