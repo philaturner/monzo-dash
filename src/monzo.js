@@ -41,6 +41,6 @@ export default class Monzo {
 
 	setSpendToday = () => {
 		let data = balanceJSON;
-		this.dashboard.spend_today = Math.abs(data.spend_today)/100;
+		this.dashboard.spend_today = parseFloat(Math.round(Math.abs(data.spend_today) * 100) / 10000).toFixed(2);
 	}
 }
