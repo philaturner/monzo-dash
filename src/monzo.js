@@ -1,13 +1,54 @@
 import balanceJSON from './example-data/balance.json'
 import transJSON from './example-data/trans.json'
 
-export default class Monzo {
+export default class Monzo{
 	constructor(){
 		this.dashboard = {};
 		this.transactions = {};
+		this.setBalance(balanceJSON.balance);
+		this.setSpendToday(balanceJSON.spend_today);
 		this.parseTransactions();
-		this.setBalance();
-		this.setSpendToday();
+	}
+
+	getApiCallUrl = (accountId) => {
+		return `https://api.monzo.com/balance?account_id=${accountId}` 
+	}
+
+	getApiHeader = (token) => {
+		return {
+			headers: {
+				"Authorization": `Bearer ${token}`
+			}
+		}
+	}
+
+	makeApiCall = (accountId, token) => {
+		return new Promise((resolve, reject) => {
+			fetch(this.getApiCallUrl(accountId), this.getApiHeader(token))
+			.then(response => {
+					if (!response.ok){
+							throw Error('No response')
+					}
+					if (response.status !== 200){
+							throw Error('Failed Auth')
+					}
+					return response
+			})
+			.then(data => data.json())
+			.then(data => {
+				resolve(data);
+			}, () => {
+					reject(console.log("api call failure"));
+			})
+		});
+	}
+
+	setBalance = (value) => {
+		this.dashboard.balance = parseFloat(Math.round(Math.abs(value) * 100) / 10000).toFixed(2);
+	}
+
+	setSpendToday = (value) => {
+		this.dashboard.spend_today = parseFloat(Math.round(Math.abs(value) * 100) / 10000).toFixed(2);
 	}
 
 	parseTransactions= () => {
@@ -32,15 +73,5 @@ export default class Monzo {
 		});
 		this.dashboard.transaction_count = transCounter;
 		this.dashboard.transaction_total_value = totalValue;
-	}
-
-	setBalance = () => {
-		let data = balanceJSON;
-		this.dashboard.balance = data.balance/100;
-	}
-
-	setSpendToday = () => {
-		let data = balanceJSON;
-		this.dashboard.spend_today = parseFloat(Math.round(Math.abs(data.spend_today) * 100) / 10000).toFixed(2);
 	}
 }

@@ -136,6 +136,10 @@ class SelectedElements extends React.Component{
 }
 
 class LoginForm extends React.Component{
+	loginHandler = () => {
+		this.props.loginHandler(this.accID, this.token);
+	}
+
 	render(){
 			return(
 				<div className = "login-form">
@@ -143,19 +147,23 @@ class LoginForm extends React.Component{
 				<Form horizontal>
 				<FormGroup controlId="formHorizontalEmail">
 					<Col sm={30}>
-						<FormControl type="text" placeholder="Acc ID" />
+						<FormControl type="text" 
+												 inputRef={input => this.accID = input} 
+												 placeholder="Acc ID" />
 					</Col>
 				</FormGroup>
 
 				<FormGroup controlId="formHorizontalPassword">
 					<Col sm={30}>
-						<FormControl type="password" placeholder="Token" />
+						<FormControl type="password" 
+												 inputRef={input => this.token = input} 
+												 placeholder="Token" />
 					</Col>
 				</FormGroup>
 
 				<FormGroup>
 					<Col smOffset={5} sm={30}>
-						<Button onClick = {this.props.loginHandler}>Login</Button>
+						<Button onClick={this.loginHandler}>Login</Button>
 					</Col>
 				</FormGroup>
 			</Form>
@@ -196,11 +204,17 @@ class Main extends React.Component{
 		})
 	}
 
-	login = () => {
-		let monzo = new Monzo();
-		this.setState({
-			loggedIn: true,
-			monzo: monzo
+	login(accID, token){
+		console.log(accID.value,token.value)
+		const monzo = new Monzo();
+		monzo.makeApiCall(accID.value, token.value).then((result) => {
+			monzo.setBalance(result.balance);
+			monzo.setSpendToday(result.spend_today);
+			this.setState({
+				loggedIn: true,
+				monzo,
+				result
+			})
 		})
 	}
 
@@ -220,10 +234,12 @@ class Main extends React.Component{
 					filterText = {this.state.filterText}
 					selectedElements = {this.state.selectedElements}
 					removeSelected = {this.removeSelected.bind(this)}
+					accID = {this.state.accID}
 				/> 
 				:
 				<LoginForm 
-					loginHandler = {this.login}
+					loginHandler = {this.login.bind(this)}
+					accID = {this.state}
 				/>
 			}
 			</div>
