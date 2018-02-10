@@ -54,7 +54,7 @@ class ItemHolder extends React.Component{
 
 		const filteredTrans = Object.filter(transactions, item => {
 			if (item.merchant){
-				return !item.merchant.toLowerCase().indexOf(this.props.searchText)
+				return !item.merchant.toLowerCase().indexOf(this.props.filterText)
 			}
 		})
 
@@ -81,7 +81,7 @@ class ItemHolder extends React.Component{
 
 class Balance extends React.Component{	
 	render(){
-		const { balance, spend_today, transaction_count, transaction_total_value, searchText, handleChange } = this.props;
+		const { balance, spend_today, transaction_count, transaction_total_value, filterText, handleChange } = this.props;
 			return(
 				<div>
 					<div className="account-summary">
@@ -97,8 +97,8 @@ class Balance extends React.Component{
 						>
 						<FormControl
 							type="text"
-							value={searchText}
-							placeholder="Filter..."
+							value={filterText}
+							placeholder="Filter results..."
 							onChange={handleChange}
 						/>
 						</FormGroup>
@@ -143,7 +143,7 @@ class Main extends React.Component{
 			this.state = {
 				monzo: {},
 				loggedIn: false,
-				searchText: ""
+				filterText: ""
 			}
 		}
 	
@@ -151,7 +151,7 @@ class Main extends React.Component{
 		e.preventDefault()
 		console.log("handling");
 		this.setState({
-			searchText: e.target.value
+			filterText: e.target.value
 		})
 	}
 
@@ -182,7 +182,7 @@ class Main extends React.Component{
 					transaction_count = {this.state.monzo.dashboard.transaction_count}
 					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
 					handleChange = {this.handleChange}
-					searchText = {this.state.searchText}
+					filterText = {this.state.filterText}
 				/> 
 				:
 				<LoginForm 
@@ -196,7 +196,7 @@ class Main extends React.Component{
 							<ItemHolder 
 								transaction_count = {this.state.transaction_count}
 								monzo_data = {this.state.monzo}
-								searchText = {this.state.searchText}
+								filterText = {this.state.filterText}
 							/>
 						:
 							<div className = "welcome-text">
