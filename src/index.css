@@ -46,7 +46,7 @@ body {
 }
 
 .top-nav h1{
-  font-weight: 550;
+  font-weight: 590;
   padding-top: 5px;
   padding-bottom: 0;
   text-transform: uppercase;
@@ -258,6 +258,7 @@ button {
 }
 
 .panel-item.emoji {
+  border-bottom: 1px solid #9E9E9E;
   background-color: white;
   color: black;
 }

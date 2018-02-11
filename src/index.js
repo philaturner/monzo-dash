@@ -267,7 +267,7 @@ class Main extends React.Component{
 				<div className = "right-content">
 				<div className = "top-nav">
 					<h1>Monzo Dashboard</h1>
-					<span className = "subtext">a place to view all your transactions</span>
+					<span className = "subtext">a fun place to browse your transactions</span>
 		 		</div>
 						{this.state.loggedIn
 						?
@@ -285,7 +285,7 @@ class Main extends React.Component{
 								</div>
 								<div className ="content">
 									<span className ="amount">£1,125.00</span><br />
-									<span className ="transactions">100 transactions</span>
+									<span className ="transactions">114 transactions</span>
 								</div>
 							</div>
 							<div className = "panel-item blue">
