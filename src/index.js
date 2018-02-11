@@ -71,9 +71,6 @@ class ItemHolder extends React.Component{
 		})
 		return(
 			<div>
-				<div className = "right-top-nav">
-					<h2>Transactions</h2>
-				</div>
 				<div className = "item-container">
 					{itemsArr}
 				</div>
@@ -155,7 +152,7 @@ class LoginForm extends React.Component{
 				} 
 				<Form horizontal>
 				<FormGroup controlId="formHorizontalEmail">
-					<Col sm={12}>
+					<Col sm={11}>
 						<FormControl type="text" 
 												 inputRef={input => this.accID = input} 
 												 placeholder="Acc ID" />
@@ -163,7 +160,7 @@ class LoginForm extends React.Component{
 				</FormGroup>
 
 				<FormGroup controlId="formHorizontalPassword">
-					<Col sm={12}>
+					<Col sm={11}>
 						<FormControl type="password" 
 												 inputRef={input => this.token = input} 
 												 placeholder="Token" />
@@ -268,6 +265,10 @@ class Main extends React.Component{
 			}
 			</div>
 				<div className = "right-content">
+				<div className = "top-nav">
+					<h1>Monzo Dashboard</h1>
+					<span className = "subtext">a place to view all your transactions</span>
+		 		</div>
 						{this.state.loggedIn
 						?
 							<ItemHolder 
@@ -278,12 +279,80 @@ class Main extends React.Component{
 								handleClick = {this.handleClick.bind(this)}
 							/>
 						:
-							<div className = "welcome-text">
-								<h2>Yar Pirate Ipsum</h2>
+							<div className = "panel-container">
+							<div className = "panel-item red">
+								<div className ="icon red">
+								</div>
+								<div className ="content">
+									<span className ="amount">£1,125.00</span><br />
+									<span className ="transactions">100 transactions</span>
+								</div>
+							</div>
+							<div className = "panel-item blue">
+								<div className ="icon blue">
+								</div>
+								<div className ="content">
+									<span className ="amount">£12.50</span><br />
+									<span className ="transactions">Spent today</span>
+								</div>
+							</div>
+							<div className = "panel-item default">
+								<div className ="icon default">
+								</div>
+								<div className ="content">
+									<span className ="amount">£143.80</span><br />
+									<span className ="transactions">Starbucks spend</span>
+								</div>
+							</div>
+							<div className = "panel-text">
+								<h2>Text Panel 1</h2>
 								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
-								<p>Pillage Nelsons folly Chain Shot tack line run a rig lugger coxswain bilge water holystone. Pieces of Eight run a shot across the bow Sail ho American Main snow booty ho quarter boom squiffy. Nipper Plate Fleet hardtack topsail Gold Road boatswain pinnace barque mizzenmast gaff.</p>				
-								<p>Sail ho run a shot across the bow poop deck keel fire ship Yellow Jack pressgang scallywag grog blossom bounty. Mizzen pressgang tackle cackle fruit booty Shiver me timbers lanyard Buccaneer scallywag rigging. Pinnace bring a spring upon her cable pink warp cable scallywag Letter of Marque Barbary Coast aft fire ship.</p>
-						</div>
+								<div className = "tag">
+									<span className="eating">eating out</span>
+									<span className="groceries">groceries</span>
+									<span className="entertainment">entertainment</span>
+								</div>
+							</div>
+							<div className = "panel-text">
+								<h2>Text Panel 2</h2>
+								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
+								<div className = "tag">
+									<span className="blue">github</span>
+									<span className="purple">docs</span>
+									<span className="green">download</span>
+								</div>
+							</div>
+							<div className = "panel-item emoji">
+								<div className ="icon emoji">
+									<span className ="em">🍕</span>
+								</div>
+								<div className ="content">
+									<span className ="amount">Just Eat</span><br />
+									<span className ="transactions">£10.03</span>
+									<span className="category eating">eating out</span>
+								</div>
+							</div>
+							<div className = "panel-item emoji">
+								<div className ="icon emoji">
+									<span className ="em">🛍</span>
+								</div>
+								<div className ="content">
+									<span className ="amount">John Lewis</span><br />
+									<span className ="transactions">£25.00</span>
+									<span className="category shopping">shopping</span>
+								</div>
+							</div>
+							<div className = "panel-item emoji">
+								<div className ="icon emoji">
+									<span className ="em">🍏</span>
+								</div>
+								<div className ="content">
+									<span className ="amount">Tesco</span><br />
+									<span className ="transactions">£19.55</span>
+									<span className="category groceries">groceries</span>
+								</div>
+							</div>
+							</div>
 						}
 				</div>
 			</div>

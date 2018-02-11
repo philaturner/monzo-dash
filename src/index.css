@@ -1,63 +1,83 @@
+:root {
+  --bills-color: #50B8DD;
+  --cash-color: #9ABBAA;
+  --eating-out-color: #E64B5F;
+  --entertainment-color: #EB824B;
+  --groceries-color: #F5B946;
+  --holiday-color: #B882FC;
+  --shopping-color: #F09696;
+  --transport-color: #1C7890;
+  --general-color: #9a9a9a;
+  --expenses-color: #DBBA88;
+}
+
 body {
   font-family: 'Open Sans Condensed', sans-serif;
-  background: #696969;
+  background: #e4e4e4;
+  margin: 0;
+	padding: 0;
+	border: 0;
+  vertical-align: baseline;
 }
 
 .container{
-  display: flex;
-  align-content: flex-start;
-  background: #363636;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  background: #e4e4e4;
+  padding: 0;
+}
+
+.right-content{
+  flex: 5;
+  background-color: #e4e4e4;
+}
+
+.right-content h1, h2, h3, h4, p{
+  color: #303030;
+  margin: 0;
+  padding: 15px
+}
+
+.top-nav{
+  height: 80px;
+  background-color: white;
+  border-bottom: 2px solid #dddddd
+}
+
+.top-nav h1{
+  font-weight: 550;
+  padding-top: 5px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+}
+
+.subtext{
+  font-size: 18px;
+  margin-top: 0px;
+  padding-left: 15px;
 }
 
 .left-nav{
   flex: 1;
-  border-right: 1px solid white;
-  max-width: 18%;
-  height: 100vh;
-  padding-right: 15px;
+  background-color: #252E33;
+  height: 230px;
 }
 
-.right-content{
-  padding-left: 5px;
-  flex: 2;
+.left-nav h1, h2, h3, h4, p{
+  color: white;
+  margin: 0;
+  padding: 10px
+}
+
+.left-nav h2{
+  background-color: #0E1215;
+  border-left: 5px solid #5539A0;
+  font-size: 22px;
 }
 
 .alert{
-  width: 90%;
-}
-  
-h1, h2, h3, h4, p {
-  color: white;
-  margin-top: 10px;
-  margin-left: 5px;
-}
-
-h1, h2, h3, h4{
-  text-transform: uppercase;
-  color: navajowhite;
-}
-
-h3, h4 {
-  color: black;
-  margin: 2px;
-}
-
-h3 {
-  font-size: 28px;
-  color: white;
-}
-
-h4 {
-  font-size: 20px;
-}
-
-p {
-  font-size: 16px;
-}
-
-.left-nav h4 {
-  color: white;
+  width: 95%;
 }
 
 button {
@@ -66,6 +86,20 @@ button {
 
 .col-sm-0 {
   color: white;
+}
+
+.col-sm-12 {
+  margin-left: 7px;
+}
+
+.col-sm-11 {
+  margin-left: 7px;
+  margin-top: 7px;
+  margin-bottom: 0px;
+}
+
+.col-sm-10 {
+  margin-left: 7px;
 }
 
 .item-container{
@@ -130,4 +164,171 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
+}
+
+.panel-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+
+.panel-text{
+  margin-left: 15px;
+  margin-top: 10px;
+  padding: 10px;
+  color: black;
+  width: 48%;
+  height: auto;
+  background-color: white;
+  border: 2px solid #dddddd;
+  border-bottom: 2px solid #9E9E9E;
+  border-radius: 5px;
+}
+
+.panel-text h2, p {
+  color: #303030;
+}
+
+.tag{
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.tag span {
+  margin-left: 10px;
+  text-transform: uppercase;
+  color: white;
+  padding: 5px;
+}
+
+.category{
+  text-transform: uppercase;
+  color: white;
+  float: right;
+  margin-right: 15px;
+  padding: 5px;
+}
+
+.category.eating{
+  background-color: var(--eating-out-color);
+}
+
+.category.groceries{
+  background-color: var(--groceries-color);
+}
+
+.category.shopping{
+  background-color: var(--shopping-color);
+}
+
+.tag span.blue{
+  background-color: #4792E7;
+}
+
+.tag span.purple {
+  background-color: #5F40AB;
+}
+
+.tag span.green{
+  background-color: #67AC5F;
+}
+
+.tag span.eating{
+  background-color: var(--eating-out-color);
+}
+
+.tag span.groceries{
+  background-color: var(--groceries-color);
+}
+
+.tag span.entertainment{
+  background-color: var(--entertainment-color);
+}
+
+.panel-item{
+  display: flex;
+  margin-left: 15px;
+  margin-top: 10px;
+  color: white;
+  width: 31%;
+  height: 100px;
+  border: 2px solid #dddddd;
+  border-radius: 5px;
+}
+
+.panel-item.emoji {
+  background-color: white;
+  color: black;
+}
+
+.panel-item.red {
+  background-color: #E25141;
+}
+
+.panel-item.blue {
+  background-color: #4495EB;
+}
+
+.panel-item.default {
+  background-color: white;
+  color: black;
+}
+
+.icon{
+  flex: 1;
+}
+
+.icon.red{
+  background-color: #B54133;
+  background-image: url("./img/card_icon.png");
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 72%;
+}
+
+.icon.blue{
+  background-color: #3879BC;
+  background-image: url("./img/money_icon.png");
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 73%;
+}
+
+.icon.default {
+  background-color: darkgrey;
+  background-image: url("./img/starbucks.png");
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 83%;
+}
+
+.icon.emoji {
+  background-color: #f29a38;
+}
+
+span.em{
+  padding-left: 16px;
+  font-size: 48px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 2;
+}
+
+.content{
+  margin-left: 20px;
+  padding-top: 12px;
+  flex: 2;
+}
+
+.content .amount {
+  font-size: 30px;
+}
+
+.content .transactions {
+  font-size: 20px;
+}
+
+.panel-item h2, p {
+  color: #303030;
 }
