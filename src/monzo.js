@@ -45,7 +45,7 @@ export default class Monzo{
 			.then(data => {
 				resolve(data);
 			}, () => {
-					reject(console.log("api call failure"));
+					reject({status: false});
 			})
 		});
 	}

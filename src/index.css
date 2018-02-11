@@ -1,14 +1,13 @@
 body {
   font-family: 'Open Sans Condensed', sans-serif;
-  background: #696969
-
+  background: #696969;
 }
 
 .container{
   display: flex;
   align-content: flex-start;
   background: #363636;
-  max-width: 100%;
+  width: 100%;
 }
 
 .left-nav{
@@ -22,6 +21,10 @@ body {
 .right-content{
   padding-left: 5px;
   flex: 2;
+}
+
+.alert{
+  width: 90%;
 }
   
 h1, h2, h3, h4, p {
@@ -47,6 +50,10 @@ h3 {
 
 h4 {
   font-size: 20px;
+}
+
+p {
+  font-size: 16px;
 }
 
 .left-nav h4 {
@@ -100,6 +107,10 @@ button {
 
 .account-summary{
   margin-bottom: 15px;
+}
+
+.account-summary form{
+  margin-right: 15px;
 }
 
 .selected-child{

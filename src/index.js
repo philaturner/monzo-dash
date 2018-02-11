@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Form, FormGroup, Col, FormControl, Button } from 'react-bootstrap';
+import { Form, FormGroup, Col, FormControl, Button, Alert } from 'react-bootstrap';
 import Monzo from './monzo.js';
 
 class Items extends React.Component{
@@ -141,12 +141,21 @@ class LoginForm extends React.Component{
 	}
 
 	render(){
+			const { loginError } = this.props
 			return(
 				<div className = "login-form">
 				<h2>Login</h2>
+				{this.props.loginError
+				?
+					<Alert bsStyle="danger">
+						<strong>Oh no!</strong> Something went wrong - please check your details and try again.
+					</Alert>
+				:
+					null
+				} 
 				<Form horizontal>
 				<FormGroup controlId="formHorizontalEmail">
-					<Col sm={30}>
+					<Col sm={12}>
 						<FormControl type="text" 
 												 inputRef={input => this.accID = input} 
 												 placeholder="Acc ID" />
@@ -154,7 +163,7 @@ class LoginForm extends React.Component{
 				</FormGroup>
 
 				<FormGroup controlId="formHorizontalPassword">
-					<Col sm={30}>
+					<Col sm={12}>
 						<FormControl type="password" 
 												 inputRef={input => this.token = input} 
 												 placeholder="Token" />
@@ -162,7 +171,7 @@ class LoginForm extends React.Component{
 				</FormGroup>
 
 				<FormGroup>
-					<Col smOffset={5} sm={30}>
+					<Col smOffset={1} sm={14}>
 						<Button onClick={this.loginHandler}>Login</Button>
 						<Button onClick={this.props.sampleHandler}>Sample Data</Button>
 					</Col>
@@ -217,6 +226,10 @@ class Main extends React.Component{
 					monzo
 				})
 			})
+		}, () => {
+			this.setState({
+				loginError: true
+			})
 		})
 	}
 
@@ -249,6 +262,7 @@ class Main extends React.Component{
 				:
 				<LoginForm 
 					loginHandler = {this.login.bind(this)}
+					loginError = {this.state.loginError}
 					sampleHandler = {this.handleSample.bind(this)}
 				/>
 			}
