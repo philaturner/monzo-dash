@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Form, FormGroup, Col, FormControl, Button, Alert } from 'react-bootstrap';
 import Monzo from './monzo.js';
+import { VictoryPie } from 'victory';
 
 class Items extends React.Component{
 	render(){
@@ -312,21 +313,23 @@ class Main extends React.Component{
 								</div>
 							</div>
 							<div className = "panel-text">
+								<h2>Graph Panel</h2>
+								<p>
+								<VictoryPie />
+								</p>
+								<div className = "tag">
+									<span className="green">graph</span>
+									<span className="blue">spend</span>
+									<span className="purple">month</span>
+								</div>
+							</div>
+							<div className = "panel-text">
 								<h2>Text Panel 1</h2>
 								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
 								<div className = "tag">
 									<span className="eating">eating out</span>
 									<span className="groceries">groceries</span>
 									<span className="entertainment">entertainment</span>
-								</div>
-							</div>
-							<div className = "panel-text">
-								<h2>Text Panel 2</h2>
-								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
-								<div className = "tag">
-									<span className="blue">github</span>
-									<span className="purple">docs</span>
-									<span className="green">download</span>
 								</div>
 							</div>
 							<div className = "panel-item emoji">
