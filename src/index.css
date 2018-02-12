@@ -46,7 +46,7 @@ body {
 }
 
 .top-nav h1{
-  font-weight: 590;
+  font-weight: 600;
   padding-top: 5px;
   padding-bottom: 0;
   text-transform: uppercase;
@@ -61,7 +61,7 @@ body {
 .left-nav{
   flex: 1;
   background-color: #252E33;
-  height: 230px;
+  height: 100%;
 }
 
 .left-nav h1, h2, h3, h4, p{
@@ -107,38 +107,6 @@ button {
   flex-wrap: wrap;
 }
 
-.child-items{
-  border-radius: 25px;
-  margin: 5px;
-  padding-top: 5px;
-  text-align: center;
-  background-color: navajowhite;
-  width: 32%;
-  height: 100px;
-  box-sizing: border-box;
-}
-
-@media only screen and (max-width: 769px){
-  .child-items{
-    width: 47%;
-  }
-
-  .form-horizontal{
-    margin: 0px;
-  }
-}
-
-.child-items:hover{
-  box-shadow: 0px 2px 1px rgb(211, 211, 211);
-  cursor: pointer;
-}
-
-.child-items p{
-  color: black;
-  margin: 0px;
-  padding: 10px;
-}
-
 .account-summary{
   margin-bottom: 15px;
 }
@@ -150,17 +118,22 @@ button {
 .selected-child{
   font-size: 15px;
   color: black;
-  background-color: cornsilk;
-  margin: 2px;
-  padding: 3px;
+  background-color: white;
+  margin: 3px;
+  padding: 5px;
 }
 
 .selected-child span{
   float: right;
 }
 
+.filter-input{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .selected-child:hover{
-  background-color: rgb(143, 0, 0);
+  background-color: #E25141;
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -210,7 +183,7 @@ button {
   padding: 5px;
 }
 
-.category.eating{
+.category.eating_out{
   background-color: var(--eating-out-color);
 }
 
@@ -220,6 +193,34 @@ button {
 
 .category.shopping{
   background-color: var(--shopping-color);
+}
+
+.category.bills{
+  background-color: var(--bills-color);
+}
+
+.category.cash{
+  background-color: var(--cash-color);
+}
+
+.category.entertainment{
+  background-color: var(--entertainment-color);
+}
+
+.category.holiday{
+  background-color: var(--holiday-color);
+}
+
+.category.transport{
+  background-color: var(--transport-color);
+}
+
+.category.general{
+  background-color: var(--general-color);
+}
+
+.category.expenses{
+  background-color: var(--expenses-color);
 }
 
 .tag span.blue{
@@ -260,7 +261,11 @@ button {
 .panel-item.emoji {
   border-bottom: 1px solid #9E9E9E;
   background-color: white;
-  color: black;
+  color:#303030;
+}
+
+.panel-item.emoji:hover {
+  cursor: pointer;
 }
 
 .panel-item.red {
@@ -305,7 +310,7 @@ button {
 }
 
 .icon.emoji {
-  background-color: #f29a38;
+  background-color: black;
 }
 
 span.em{

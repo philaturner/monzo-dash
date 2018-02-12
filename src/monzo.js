@@ -76,9 +76,11 @@ export default class Monzo{
 					search_string: ""
 				}
 				this.transactions[transCounter].search_string = this.transactions[transCounter].category + this.transactions[transCounter].merchant + this.transactions[transCounter].amount;
+				this.transactions[transCounter].emoji = value.merchant ? value.merchant.emoji : "🍴";
+				if (this.transactions[transCounter].emoji === "") this.transactions[transCounter].emoji = "🍴";
 			}
 		});
 		this.dashboard.transaction_count = transCounter;
-		this.dashboard.transaction_total_value = totalValue;
+		this.dashboard.transaction_total_value = totalValue.toLocaleString("en-GB", {minimumFractionDigits: 2});
 	}
 }

@@ -5,38 +5,20 @@ import { Form, FormGroup, Col, FormControl, Button, Alert } from 'react-bootstra
 import Monzo from './monzo.js';
 
 class Items extends React.Component{
-	constructor(){
-		super();
-		this.colours = {
-			'bills': '#50B8DD',
-			'cash': '#9ABBAA',
-			'eating_out': '#E64B5F',
-			'entertainment': '#EB824B',
-			'groceries': '#F5B946',
-			'holiday': '#B882FC',
-			'shopping': '#F09696',
-			'transport': '#1C7890',
-			'general': '#9a9a9a',
-			'expenses': "#DBBA88"
-		}
-	}
-
 	render(){
-		const { id, merchant, category, value, handleClick } = this.props;
-
-		const styles = {
-			backgroundColor: this.colours[category]
-		}
+		const { id, merchant, category, value, handleClick, emoji } = this.props;
+		const classText = `category ${category}`;
 
 		return(
-			<div className = "child-items" 
-					 id={id}
-					 style={styles}
-					 onClick ={() => handleClick({ id, merchant, category, value })}
-					 >
-				<h3>{merchant}</h3>
-				<h4>{category}</h4>
-				<h5>£{value}</h5>
+			<div className = "panel-item emoji" id={id} onClick ={() => handleClick({ id, merchant, category, value })}>
+			<div className ="icon emoji">
+				<span className ="em">{emoji}</span>
+			</div>
+			<div className ="content">
+				<span className ="amount">{merchant}</span><br />
+				<span className ="transactions">£{value}</span>
+				<span className={classText}>{category}</span>
+			</div>
 			</div>
 		)
 	}
@@ -46,6 +28,7 @@ class ItemHolder extends React.Component{
 	render(){
 		const { transactions } = this.props.monzo_data;
 		const { handleClick } = this.props;
+		const { dashboard } = this.props.monzo_data;
 		const itemsArr = [];
 
 		Object.filter = (obj, predicate) => 
@@ -65,13 +48,38 @@ class ItemHolder extends React.Component{
 					id={value.id}
 					category={value.category}
 					value={value.amount}
-					merchant={value.merchant.length > 16 ? value.merchant.substring(0,16) + "..." : value.merchant}
+					emoji={value.emoji}
+					merchant={value.merchant.length > 13 ? value.merchant.substring(0,13) + ".." : value.merchant}
 				/>
 			)
 		})
 		return(
 			<div>
-				<div className = "item-container">
+				<div className = "panel-container">
+				<div className = "panel-item red">
+								<div className ="icon red">
+								</div>
+								<div className ="content">
+									<span className ="amount">£{dashboard.transaction_total_value}</span><br />
+									<span className ="transactions">{dashboard.transaction_count} transactions</span>
+								</div>
+							</div>
+							<div className = "panel-item blue">
+								<div className ="icon blue">
+								</div>
+								<div className ="content">
+									<span className ="amount">£{dashboard.spend_today}</span><br />
+									<span className ="transactions">Spent today</span>
+								</div>
+							</div>
+							<div className = "panel-item default">
+								<div className ="icon default">
+								</div>
+								<div className ="content">
+									<span className ="amount">£143.80</span><br />
+									<span className ="transactions">Starbucks spend</span>
+								</div>
+							</div>
 					{itemsArr}
 				</div>
 			</div>
@@ -85,13 +93,13 @@ class Balance extends React.Component{
 			return(
 				<div>
 					<div className="account-summary">
-						<h2>Summary</h2>
-						<h4>Balance: £{balance}</h4>
-						<h4>Spent Today: £{spend_today}</h4>
-						<h4>Transactions: {transaction_count}</h4>
-						<h4>Total Spent: £{transaction_total_value|0}</h4>
+						<h2>Search</h2>
+						{/* <p>Balance: £{balance}</p>
+						<p>Spent Today: £{spend_today}</p>
+						<p>Transactions: {transaction_count}</p>
+						<p>Total Spent: £{transaction_total_value|0}</p> */}
 					</div>
-					<form>
+					<form className ="filter-input">
 						<FormGroup
 							controlId="formBasicText"
 						>
@@ -125,7 +133,6 @@ class SelectedElements extends React.Component{
 		})
 		return(
 			<div className = "selected-elements">
-				<h4>Selected</h4>
 				{elements}
 			</div>
 		)
@@ -329,7 +336,7 @@ class Main extends React.Component{
 								<div className ="content">
 									<span className ="amount">Just Eat</span><br />
 									<span className ="transactions">£10.03</span>
-									<span className="category eating">eating out</span>
+									<span className="category eating_out">eating out</span>
 								</div>
 							</div>
 							<div className = "panel-item emoji">
