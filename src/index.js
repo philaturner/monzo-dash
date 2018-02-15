@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { Form, FormGroup, Col, FormControl, Button, Alert } from 'react-bootstrap';
 import Monzo from './monzo.js';
-import { VictoryPie } from 'victory';
+import { VictoryPie, VictoryChart, VictoryTheme, VictoryLine } from 'victory';
 
 class Items extends React.Component{
 	render(){
@@ -313,18 +313,77 @@ class Main extends React.Component{
 								</div>
 							</div>
 							<div className = "panel-text">
-								<h2>Graph Panel</h2>
+								<h2>Graph Panel 1</h2>
 								<p>
-								<VictoryPie />
+								<VictoryPie
+									width={500}
+									animate={{
+										duration: 2000
+									}}
+									colorScale={["tomato", "orange", "gold", "cyan"]}
+								  data={[
+										{ x: "Eating Out", y: 75 },
+										{ x: "Shopping", y: 10 },
+										{ x: "Groceries", y: 39 },
+										{ x: "Expenses", y: 1 }
+									]}
+								/>
 								</p>
 								<div className = "tag">
-									<span className="green">graph</span>
+									<span className="green">pie</span>
 									<span className="blue">spend</span>
 									<span className="purple">month</span>
 								</div>
 							</div>
 							<div className = "panel-text">
+								<h2>Graph Panel 2</h2>
+								<p>
+								<VictoryChart
+									theme={VictoryTheme.material}
+									domainPadding={{y: 55}}
+								>
+									<VictoryLine
+										animate={{
+											duration: 2000,
+											onLoad: { duration: 1000 }
+										}}
+										interpolation="natural"
+										style={{
+											data: { stroke: "#c43a31" },
+											parent: { border: "1px solid #ccc"}
+										}}
+										data={[
+											{ x: "d1", y: 1.25 },
+											{ x: "d2", y: 6.54 },
+											{ x: "d3", y: 2.5 },
+											{ x: "d4", y: 4.12 },
+											{ x: "d5", y: 0.00 },
+											{ x: "d6", y: 1.34 },
+											{ x: "d7", y: 0.54 },
+											{ x: "d8", y: 13.5 },
+											{ x: "d9", y: 12.12 },
+											{ x: "d10", y: 2.00 }
+										]}
+									/>
+								</VictoryChart>
+								</p>
+								<div className = "tag">
+									<span className="green">line</span>
+									<span className="blue">spend</span>
+									<span className="purple">daily</span>
+								</div>
+							</div>
+							<div className = "panel-text">
 								<h2>Text Panel 1</h2>
+								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
+								<div className = "tag">
+									<span className="eating">eating out</span>
+									<span className="groceries">groceries</span>
+									<span className="entertainment">entertainment</span>
+								</div>
+							</div>
+							<div className = "panel-text">
+								<h2>Text Panel 2</h2>
 								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
 								<div className = "tag">
 									<span className="eating">eating out</span>
