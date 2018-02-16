@@ -6,6 +6,7 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
+    "react-burger-menu": "^2.2.3",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.0",
     "victory": "^0.25.4"

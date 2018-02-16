@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { Form, FormGroup, Col, FormControl, Button, Alert } from 'react-bootstrap';
-import Monzo from './monzo.js';
 import { VictoryPie, VictoryChart, VictoryTheme, VictoryLine } from 'victory';
+import { slide as Menu } from 'react-burger-menu';
+import Monzo from './monzo.js';
+
 
 class Items extends React.Component{
 	render(){
@@ -176,7 +178,7 @@ class LoginForm extends React.Component{
 				</FormGroup>
 
 				<FormGroup>
-					<Col smOffset={1} sm={14}>
+					<Col smOffset={3} sm={11}>
 						<Button onClick={this.loginHandler}>Login</Button>
 						<Button onClick={this.props.sampleHandler}>Sample Data</Button>
 					</Col>
@@ -194,7 +196,8 @@ class Main extends React.Component{
 				monzo: {},
 				loggedIn: false,
 				filterText: "",
-				selectedElements: []
+				selectedElements: [],
+				pageRoute: "home"
 			}
 		}
 	
@@ -246,34 +249,67 @@ class Main extends React.Component{
 		})
 	}
 
+	menuLogin(){
+		console.log("login clicked")
+		this.setState({
+			pageRoute: "login"
+		})
+	}
+
 	render() {
-		return(
-	 	<div className = "container">
-		 <div className= "left-nav">
-			{this.state.loggedIn
-			 ?
-				<Balance 
-					loggedIn = {this.state.loggedIn}
-					balance = {this.state.monzo.dashboard.balance}
-					spend_today = {this.state.monzo.dashboard.spend_today}
-					transaction_count = {this.state.monzo.dashboard.transaction_count}
-					transaction_total_value = {this.state.monzo.dashboard.transaction_total_value}
-					handleChange = {this.handleChange.bind(this)}
-					filterText = {this.state.filterText}
-					selectedElements = {this.state.selectedElements}
-					removeSelected = {this.removeSelected.bind(this)}
-					accID = {this.state.accID}
-				/> 
-				:
-				<LoginForm 
-					loginHandler = {this.login.bind(this)}
-					loginError = {this.state.loginError}
-					sampleHandler = {this.handleSample.bind(this)}
-				/>
+		const bm_styles = {
+			bmBurgerButton: {
+				position: 'absolute',
+				width: '28px',
+				height: '22px',
+				right: '32px',
+				top: '22px'
+			},
+			bmBurgerBars: {
+				background: '#252E33'
+			},
+			bmCrossButton: {
+				height: '24px',
+				width: '24px'
+			},
+			bmCross: {
+				background: '#bdc3c7'
+			},
+			bmMenu: {
+				background: '#252E33',
+				padding: '1em 1em 0',
+				fontSize: '2em',
+				color: "white"
+			},
+			bmMorphShape: {
+				fill: '#373a47'
+			},
+			bmItemList: {
+				color: '#b8b7ad',
+				padding: '0.8em'
+			},
+			bmOverlay: {
+				background: 'rgba(0, 0, 0, 0.3)'
 			}
-			</div>
+		}
+		
+		return(
+		<div>
+	 	<div className = "container">
 				<div className = "right-content">
 				<div className = "top-nav">
+				<Menu 
+						right
+						styles= {bm_styles}
+						outerContainerId={"top-nav"}
+						width={"260px"}
+					>
+					{!this.state.loggedIn ? <a onClick={ this.menuLogin.bind(this) } className="menu-item--small" href="#">Login</a>: null}
+					<a id="transactions" className="menu-item" href="/">Example</a>
+					<a id="analytics" className="menu-item" href="/">Example</a>
+					<a id="expenses" className="menu-item" href="/">Example</a>
+					<a id="contact" className="menu-item" href="/">Example</a>
+		 		</Menu>
 					<h1>Monzo Dashboard</h1>
 					<span className = "subtext">a fun place to browse your transactions</span>
 		 		</div>
@@ -288,19 +324,39 @@ class Main extends React.Component{
 							/>
 						:
 							<div className = "panel-container">
+							{this.state.pageRoute === "login" ?
+								<div className = "panel-text">
+								<LoginForm 
+									loginHandler = {this.login.bind(this)}
+									loginError = {this.state.loginError}
+									sampleHandler = {this.handleSample.bind(this)}
+								/>
+								</div>
+								:
+								null
+							}
+							<div className = "panel-text">
+								<h2>Welcome!</h2>
+								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
+								<div className = "tag">
+									<span className="eating">eating out</span>
+									<span className="groceries">groceries</span>
+									<span className="entertainment">entertainment</span>
+								</div>
+							</div>
 							<div className = "panel-item red">
 								<div className ="icon red">
 								</div>
 								<div className ="content">
-									<span className ="amount">£1,125.00</span><br />
-									<span className ="transactions">114 transactions</span>
+									<span className ="amount">£102.00</span><br />
+									<span className ="transactions">11 transactions</span>
 								</div>
 							</div>
 							<div className = "panel-item blue">
 								<div className ="icon blue">
 								</div>
 								<div className ="content">
-									<span className ="amount">£12.50</span><br />
+									<span className ="amount">£2.50</span><br />
 									<span className ="transactions">Spent today</span>
 								</div>
 							</div>
@@ -308,7 +364,7 @@ class Main extends React.Component{
 								<div className ="icon default">
 								</div>
 								<div className ="content">
-									<span className ="amount">£143.80</span><br />
+									<span className ="amount">£19.80</span><br />
 									<span className ="transactions">Starbucks spend</span>
 								</div>
 							</div>
@@ -333,62 +389,6 @@ class Main extends React.Component{
 									<span className="green">pie</span>
 									<span className="blue">spend</span>
 									<span className="purple">month</span>
-								</div>
-							</div>
-							<div className = "panel-text">
-								<h2>Graph Panel 2</h2>
-								<p>
-								<VictoryChart
-									theme={VictoryTheme.material}
-									domainPadding={{y: 55}}
-								>
-									<VictoryLine
-										animate={{
-											duration: 2000,
-											onLoad: { duration: 1000 }
-										}}
-										interpolation="natural"
-										style={{
-											data: { stroke: "#c43a31" },
-											parent: { border: "1px solid #ccc"}
-										}}
-										data={[
-											{ x: "d1", y: 1.25 },
-											{ x: "d2", y: 6.54 },
-											{ x: "d3", y: 2.5 },
-											{ x: "d4", y: 4.12 },
-											{ x: "d5", y: 0.00 },
-											{ x: "d6", y: 1.34 },
-											{ x: "d7", y: 0.54 },
-											{ x: "d8", y: 13.5 },
-											{ x: "d9", y: 12.12 },
-											{ x: "d10", y: 2.00 }
-										]}
-									/>
-								</VictoryChart>
-								</p>
-								<div className = "tag">
-									<span className="green">line</span>
-									<span className="blue">spend</span>
-									<span className="purple">daily</span>
-								</div>
-							</div>
-							<div className = "panel-text">
-								<h2>Text Panel 1</h2>
-								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
-								<div className = "tag">
-									<span className="eating">eating out</span>
-									<span className="groceries">groceries</span>
-									<span className="entertainment">entertainment</span>
-								</div>
-							</div>
-							<div className = "panel-text">
-								<h2>Text Panel 2</h2>
-								<p>Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom.</p>
-								<div className = "tag">
-									<span className="eating">eating out</span>
-									<span className="groceries">groceries</span>
-									<span className="entertainment">entertainment</span>
 								</div>
 							</div>
 							<div className = "panel-item emoji">
@@ -424,6 +424,7 @@ class Main extends React.Component{
 							</div>
 						}
 				</div>
+			</div>
 			</div>
 		);
 	}
