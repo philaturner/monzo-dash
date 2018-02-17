@@ -18,6 +18,8 @@ export default class Monzo{
 				return `https://api.monzo.com/balance?account_id=${accountId}`
 			case "transactions":
 				return `https://api.monzo.com/transactions?expand[]=merchant&account_id=${accountId}`
+			default:
+				return null
 		}
 	}
 
