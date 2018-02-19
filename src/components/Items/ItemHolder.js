@@ -1,11 +1,14 @@
 import React from 'react';
-import Items from './Items';
+import Transactions from './Transactions';
+import Account from '../../Summary/Account';
+import Search from '../Form/Search';
 
 class ItemHolder extends React.Component{	
 	render(){
 		const { transactions } = this.props.monzo_data;
 		const { handleClick } = this.props;
 		const { dashboard } = this.props.monzo_data;
+		const { filterText, handleChange, selectedElements, removeSelected } = this.props;
 		const itemsArr = [];
 
 		Object.filter = (obj, predicate) => 
@@ -19,7 +22,7 @@ class ItemHolder extends React.Component{
 
 		Object.entries(filteredTrans).reverse().forEach(([key, value]) => {
 			itemsArr.push(
-				<Items 
+				<Transactions 
 					handleClick={handleClick}
 					key={key}
 					id={value.id}
@@ -32,31 +35,16 @@ class ItemHolder extends React.Component{
 		})
 		return(
 			<div>
+				<Search 
+					filterText={filterText}
+					handleChange={handleChange}
+					selectedElements={selectedElements}
+					removeSelected={removeSelected}
+				/>
+				<Account 
+					dashboard={dashboard}
+				/>
 				<div className = "panel-container">
-				<div className = "panel-item red">
-								<div className ="icon red">
-								</div>
-								<div className ="content">
-									<span className ="amount">£{dashboard.transaction_total_value}</span><br />
-									<span className ="transactions">{dashboard.transaction_count} transactions</span>
-								</div>
-							</div>
-							<div className = "panel-item blue">
-								<div className ="icon blue">
-								</div>
-								<div className ="content">
-									<span className ="amount">£{dashboard.spend_today}</span><br />
-									<span className ="transactions">Spent today</span>
-								</div>
-							</div>
-							<div className = "panel-item default">
-								<div className ="icon default">
-								</div>
-								<div className ="content">
-									<span className ="amount">£143.80</span><br />
-									<span className ="transactions">Starbucks spend</span>
-								</div>
-							</div>
 					{itemsArr}
 				</div>
 			</div>

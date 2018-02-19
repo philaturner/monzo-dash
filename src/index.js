@@ -5,54 +5,9 @@ import Monzo from './Api/monzo.js';
 import LoginForm from './components/Form/LoginForm';
 import ItemHolder from './components/Items/ItemHolder';
 import PanelText from './components/Panels/PanelText';
-import { FormGroup, FormControl } from 'react-bootstrap';
-import { VictoryPie } from 'victory';
+import PanelSummary from './components/Panels/PanelSummary';
+import Transactions from './components/Items/Transactions'
 import { slide as Menu } from 'react-burger-menu';
-
-class Search extends React.Component{	
-	render(){
-		const { filterText, handleChange, selectedElements, removeSelected } = this.props;
-			return(
-				<div>
-					<form className ="filter-input">
-						<FormGroup
-							controlId="formBasicText"
-						>
-						<FormControl
-							type="text"
-							value={filterText}
-							placeholder="Filter results..."
-							onChange={handleChange}
-						/>
-						</FormGroup>
-				</form>
-				<SelectedElements 
-					selectedElements={selectedElements}
-					removeSelected={removeSelected}
-				/>
-			</div>
-			)
-		}
-	}
-
-class SelectedElements extends React.Component{
-	render(){
-		const { selectedElements, removeSelected } = this.props
-		const elements = selectedElements.map((id, index) => {
-			return <p 
-								className="selected-child" 
-								key={id} 
-								onClick={()=>removeSelected(index)} >
-								{selectedElements[index][1]}<span>£{selectedElements[index][3]}</span>
-							</p>
-		})
-		return(
-			<div className = "selected-elements">
-				{elements}
-			</div>
-		)
-	}
-}
 
 class Main extends React.Component{
 	constructor(props){
@@ -62,7 +17,7 @@ class Main extends React.Component{
 				loggedIn: false,
 				filterText: "",
 				selectedElements: [],
-				pageRoute: "home"
+				pageRoute: "login"
 			}
 		}
 	
@@ -180,12 +135,14 @@ class Main extends React.Component{
 		 		</div>
 						{this.state.loggedIn
 						?
-							<ItemHolder 
+							<ItemHolder
 								transaction_count = {this.state.transaction_count}
 								monzo_data = {this.state.monzo}
 								filterText = {this.state.filterText}
 								selectedElements = {this.state.selectedElements}
 								handleClick = {this.handleClick.bind(this)}
+								handleChange = {this.handleChange.bind(this)}
+								removeSelected = {this.removeSelected.bind(this)}
 							/>
 						:
 							<div className = "panel-container">
@@ -200,89 +157,45 @@ class Main extends React.Component{
 								:
 								null
 							}
+							<PanelSummary 
+								type="red"
+								amount="£102.00"
+								summary="11 transactions"
+							/>
+							<PanelSummary 
+								type="blue"
+								amount="£2.67"
+								summary="Spent today"
+							/>
+							<PanelSummary 
+								type="default"
+								amount="£19.30"
+								summary="Starbucks spend"
+							/>
 							<PanelText
 								title="Welcome!"
 								text="Bring a spring upon her cable main sheet hempen halter me ballast lookout league code of conduct deadlights yo-ho-ho. Handsomely jib nipperkin take a caulk execution dock lanyard pirate scallywag Brethren of the Coast swab. Hands red ensign fire ship fathom Davy Jones' Locker Nelsons folly mizzen maroon parrel boom."
 								tags={["purple","blue","green"]}
-								tagLabels={["purple","blue","green"]}
+								tagLabels={["I'm Purple","I'm Blue","I'm Green"]}
 							/>
-							<div className = "panel-item red">
-								<div className ="icon red">
-								</div>
-								<div className ="content">
-									<span className ="amount">£102.00</span><br />
-									<span className ="transactions">11 transactions</span>
-								</div>
-							</div>
-							<div className = "panel-item blue">
-								<div className ="icon blue">
-								</div>
-								<div className ="content">
-									<span className ="amount">£2.50</span><br />
-									<span className ="transactions">Spent today</span>
-								</div>
-							</div>
-							<div className = "panel-item default">
-								<div className ="icon default">
-								</div>
-								<div className ="content">
-									<span className ="amount">£19.80</span><br />
-									<span className ="transactions">Starbucks spend</span>
-								</div>
-							</div>
-							<div className = "panel-text">
-								<h2>Graph Panel 1</h2>
-								<div className ="graph">
-								<VictoryPie
-									width={500}
-									animate={{
-										duration: 2000
-									}}
-									colorScale={["tomato", "orange", "gold", "cyan"]}
-								  data={[
-										{ x: "Eating Out", y: 75 },
-										{ x: "Shopping", y: 10 },
-										{ x: "Groceries", y: 39 },
-										{ x: "Expenses", y: 1 }
-									]}
-								/>
-								</div>
-								<div className = "tag">
-									<span className="green">pie</span>
-									<span className="blue">spend</span>
-									<span className="purple">month</span>
-								</div>
-							</div>
-							<div className = "panel-item emoji">
-								<div className ="icon emoji">
-									<span className ="em" role="img" aria-labelledby="pizza">🍕</span>
-								</div>
-								<div className ="content">
-									<span className ="amount">Just Eat</span><br />
-									<span className ="transactions">£10.03</span>
-									<span className="category eating_out">eating out</span>
-								</div>
-							</div>
-							<div className = "panel-item emoji">
-								<div className ="icon emoji">
-									<span className ="em" role="img" aria-labelledby="shopping">🛍</span>
-								</div>
-								<div className ="content">
-									<span className ="amount">John Lewis</span><br />
-									<span className ="transactions">£25.00</span>
-									<span className="category shopping">shopping</span>
-								</div>
-							</div>
-							<div className = "panel-item emoji">
-								<div className ="icon emoji">
-									<span className ="em" role="img" aria-labelledby="apple">🍏</span>
-								</div>
-								<div className ="content">
-									<span className ="amount">Tesco</span><br />
-									<span className ="transactions">£19.55</span>
-									<span className="category groceries">groceries</span>
-								</div>
-							</div>
+							<Transactions
+								merchant="Just Eat"
+								value={"10.03"}
+								category="eating_out"
+								emoji="☕"
+							/>
+							<Transactions 
+								merchant="John Lewis"
+								value={"25.00"}
+								category="shopping"
+								emoji="☕"
+							/>
+							<Transactions 
+								merchant="Tesco"
+								value={"4.95"}
+								category="groceries"
+								emoji="☕"
+							/>
 							</div>
 						}
 				</div>

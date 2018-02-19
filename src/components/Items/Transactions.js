@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Items extends React.Component{
+class Transactions extends React.Component{
 	render(){
 		const { id, merchant, category, value, handleClick, emoji } = this.props;
 		const classText = `category ${category}`;
@@ -20,4 +20,4 @@ class Items extends React.Component{
 	}
 }
 
-export default Items
+export default Transactions

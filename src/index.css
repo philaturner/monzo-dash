@@ -92,7 +92,7 @@ a:visited {
 }
 
 .alert{
-  width: 95%;
+  width: 100%;
 }
 
 .col-sm-0 {
@@ -102,10 +102,6 @@ a:visited {
 .item-container{
   display: flex;
   flex-wrap: wrap;
-}
-
-.account-summary{
-  margin-bottom: 15px;
 }
 
 .account-summary form{
@@ -174,8 +170,18 @@ a:visited {
   margin-left: 5px;
 }
 
+.filter-input .form-group{
+  margin:0;
+}
+
+.form-group .form-control{
+  height: 44px;
+  font-size: 1.1em;
+}
+
 .form-horizontal button{
   margin: 1px;
+  margin-right: 5px;
 }
 
 @media (max-width: 915px){
@@ -353,8 +359,8 @@ a:visited {
 }
 
 span.em{
-  padding-left: 25%;
-  font-size: 48px;
+  padding-left: 30%;
+  font-size: 3.5em;
   text-align: center;
   vertical-align: middle;
   line-height: 2;
